@@ -63,6 +63,7 @@ fun s:set_props()
     let b:field_license_id = 'License'
     let b:field_author = 'Author'
     let b:field_date = 'Date'
+    let b:field_purpose = 'Purposes'
     let b:field_modified_date = 'Last Modified Date'
     let b:field_modified_by = 'Last Modified By'
     let b:field_separator = ':'
@@ -303,6 +304,8 @@ fun s:add_header()
         call append(i, b:comment_char . b:field_modified_by . ' ' . g:header_field_author . email)
         let i += 1
     endif
+    call append(i, b:comment_char . b:field_purpose)
+    let i += 1
 
     " If filetype supports block comment, close comment
     if b:block_comment
@@ -564,6 +567,7 @@ fun s:get_user_headers()
         call add(headers_fields, b:field_modified_by)
     endif
 
+    call add(headers_fields, b:field_purpose)
     return l:headers_fields
 endfun
 
@@ -638,6 +642,14 @@ fun s:update_fields(longer_header_length)
                 \ s:align_field_with_spaces(b:field_modified_by, a:longer_header_length)
         endif
         let b:field_modified_by = b:field_modified_by . b:field_separator
+    endif
+
+    if match(b:user_headers, b:field_purpose) != -1
+        if g:header_alignment
+            let b:field_purpose =
+                \ s:align_field_with_spaces(b:field_purpose, a:longer_header_length)
+        endif
+        let b:field_purpose = b:field_purpose . b:field_separator
     endif
 endfun
 
