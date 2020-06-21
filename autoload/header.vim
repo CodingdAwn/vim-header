@@ -237,7 +237,7 @@ endfun
 " -----------------
 " Generate Header
 fun s:add_header()
-    let save_pos = getpos(".")
+    "let save_pos = getpos(".")
     let i = 0
 
     " If filetype has initial line
@@ -306,12 +306,14 @@ fun s:add_header()
     endif
     call append(i, b:comment_char . b:field_purpose)
     let i += 1
+    " set pos to purpose line end
+    call setpos(".", [0, 4, 100, 0])
 
     " If filetype supports block comment, close comment
     if b:block_comment
         call append(i, b:comment_end)
     endif
-    call setpos(".", save_pos)
+    "call setpos(".", save_pos)
 endfun
 
 " This will replace characters which needs to be escaped in patterns
